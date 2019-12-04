@@ -18,28 +18,34 @@
 
     <style>
       #textToHide {
-        -moz-animation: hideAnimation 0s ease-in 5s forwards;
-        /* Firefox */
-        -webkit-animation: hideAnimation 0s ease-in 5s forwards;
-        /* Safari and Chrome */
-        -o-animation: hideAnimation 0s ease-in 5s forwards;
-        /* Opera */
-        animation: hideAnimation 0s ease-in 5s forwards;
+        /* animation-delay: 2s; */
+        -moz-animation: hideAnimation 500ms ease-in-out 4s;
+        -webkit-animation: hideAnimation 500ms ease-in-out 4s;
+        -o-animation: hideAnimation 500ms ease-in-out 4s;
+        animation: hideAnimation 500ms ease-in-out 4s;
         -webkit-animation-fill-mode: forwards;
         animation-fill-mode: forwards;
       }
       @keyframes hideAnimation {
+        from {
+          opacity: 1;
+        }
         to {
-          width: 0;
+          opacity: 0;
+          /* width: 0;
           height: 0;
-          overflow: hidden;
+          overflow: hidden; */
         }
       }
       @-webkit-keyframes hideAnimation {
+        from {
+          opacity: 1;
+        }
         to {
-          width:0;
+          opacity: 0;
+          /* width:0;
           height:0;
-          visibility:hidden;
+          visibility:hidden; */
         }
       }
     </style>
@@ -68,11 +74,11 @@
     >Seed</div>
     <div
       id="textToHide"
-      style="color: white; margin: 0 auto; position: absolute; top: 50vh; right: 0%; left: 0%; overflow: visible; text-align: center; margin-top: -12px;"
+      style="color: white; margin: 0 auto; position: absolute; top: 10vh; right: 0%; left: 0%; overflow: visible; text-align: center; margin-top: -12px;"
     >Click anywhere for something new</div>
     <div
       id="textToHide"
-      style="color: black; margin: 0 auto; position: absolute; top: 50vh; right: 0%; left: 0%; overflow: visible; text-align: center; margin-top: 12px;"
+      style="color: black; margin: 0 auto; position: absolute; top: 10vh; right: 0%; left: 0%; overflow: visible; text-align: center; margin-top: 12px;"
     >Click anywhere for something new</div>
 
     </div>
