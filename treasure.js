@@ -55,19 +55,19 @@ var maxLevel;
 var children;
 var shapeSize;
 var distanceTravelMax;
-var zIncrease;
+var zIncrease = 0;
 var randomYRotation = 0;
 var randomXRotation = 0;
 
 
 var hasWind;
-var theEnvironmentDensity;
+var theEnvironmentDensity = 0.002;
 
 var envXRotate = 0;
 var envYRotate = 0;
 var envZRotate = 0;
 
-var rotateWithSin;
+var rotateWithSin = false;
 
 var baseShape;
 // 0 is sphere
@@ -95,11 +95,11 @@ function earthing(level, zBump) {
     var newnewBump = (i / children) * Math.PI * 2;
     var newZBump = zBump + (newnewBump);
     rotateZ(newnewBump);
-    if (randomYRotation) {
+    if (randomYRotation !== 0) {
       rotateY(randomYRotation);
     }
 
-    if (randomXRotation) {
+    if (randomXRotation !== 0) {
       rotateX(randomXRotation);
     }
     
@@ -114,7 +114,7 @@ function earthing(level, zBump) {
       rotateZ(rotateExtra * frameCount * envZRotate * ((level / 4) + 1));
     }
 
-    translate(distanceTravelMax * (1 - (level / (maxLevel + 1))), distanceTravelMax * (1 - (level / (maxLevel + 1))), zIncrease);
+    translate(distanceTravelMax * (1 - (level / (maxLevel + 1))), distanceTravelMax * (1 - (level / (maxLevel + 1))), zIncrease * 0.001);
     
     if (hasWind) {
       var inTheUniverse = noise(newZBump * theEnvironmentDensity);
@@ -147,7 +147,7 @@ function earthing(level, zBump) {
       }
     }
 
-    earthing(level + 1);
+    earthing(level + 1, newZBump);
     pop();
   }
 }
@@ -159,7 +159,7 @@ function unearthing() {
   palette = hundredColors[Math.floor(hundredColors.length * Math.random())];
   backgroundGroundColorKey = Math.floor(Math.random() * palette.length);
   backgroundStroke = palette[backgroundGroundColorKey];
-  baseStrokeKey = Math.floor(1 + backgroundGroundColorKey + (Math.random() * palette.length)) % palette.length;
+  baseStrokeKey = Math.floor(1 + backgroundGroundColorKey + (Math.random() * (palette.length - 1))) % palette.length;
   baseStroke = palette[baseStrokeKey];
 
   newColorEveryLevel = Math.random() > 0.6;
@@ -232,9 +232,10 @@ function unearthing() {
   
   ambientIntensity = Math.random() * 255;
   
+  levelColors = [];
   if (newColorEveryLevel) {
     for (var i = 0; i < maxLevel + 1; i++) {
-      var levelStrokeKey = Math.floor(1 + backgroundGroundColorKey + (Math.random() * palette.length)) % palette.length;
+      var levelStrokeKey = Math.floor(1 + backgroundGroundColorKey + (Math.random() * (palette.length - 1))) % palette.length;
   
       levelColors.push(color(palette[levelStrokeKey]));
     }
@@ -245,8 +246,9 @@ function unearthing() {
     pointLight(0, 0, 250, canvasWidth, canvasHeight, 250);
   } else {
     var amountOfLights = 1 + Math.floor(Math.random() * 4);
+    thelights = [];
     for (var i = 0; i < amountOfLights; i++) {
-      var lightColorKey = Math.floor(1 + backgroundGroundColorKey + (Math.random() * palette.length)) % palette.length;
+      var lightColorKey = Math.floor(1 + backgroundGroundColorKey + (Math.random() * (palette.length - 1))) % palette.length;
       var lightColor = color(palette[lightColorKey]);
       
       var lightX = -(canvasWidth / 2) + (Math.random() * canvasWidth * 1.5);
@@ -266,6 +268,8 @@ function unearthing() {
   
   if (Math.random() > 0.25) {
     baseZBump = Math.random() * Math.PI * 2;
+  } else {
+    baseZBump = 0;
   }
   
   if (strokeTheShapes) {
@@ -280,6 +284,18 @@ window.onpopstate = function(event) {
 }
 
 function touchStarted() {
+  seed = Math.floor(Math.random() * 100000);
+  Math.seedrandom(String(seed));
+
+  var newPageTitle = 'Treasure - ' + seed;
+  history.pushState({
+    seed: seed
+  }, newPageTitle, '?seed=' + seed);
+
+  unearthing();
+}
+
+function mousePressed() {
   seed = Math.floor(Math.random() * 100000);
   Math.seedrandom(String(seed));
 
@@ -339,7 +355,12 @@ function draw() {
     rotateZ(baseZBump);
   }
   
-  translate(0, 0, zPos + (-distanceTravelMax * 10));
+  if (distanceTravelMax > 600) {
+    translate(0, 0, zPos - Math.abs(distanceTravelMax * 6));
+  } else {
+    translate(0, 0, zPos - Math.abs(distanceTravelMax * 10));
+  }
+
   earthing(0, baseZBump);
   pop();
 }
