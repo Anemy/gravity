@@ -291,18 +291,18 @@ window.onpopstate = function(event) {
 }
 
 function touchStarted() {
-  if (inANewSeedTimeout) {
-    return;
-  } else {
-    wasDoubleTouch = touches.length > 1;
-    inANewSeedTimeout = true;
-    activateNewSeedTimeout = window.setTimeout(function() {
-      if (wasDoubleTouch) {
-        inANewSeedTimeout = false;
-        activateNewSeedTimeout = null;
+  // if (inANewSeedTimeout) {
+  //   return;
+  // } else {
+  //   wasDoubleTouch = touches.length > 1;
+  //   inANewSeedTimeout = true;
+  //   activateNewSeedTimeout = window.setTimeout(function() {
+      // if (wasDoubleTouch) {
+        // inANewSeedTimeout = false;
+        // activateNewSeedTimeout = null;
 
-        return;
-      }
+        // return;
+      // }
       seed = Math.floor(Math.random() * 10000000);
       Math.seedrandom(String(seed));
     
@@ -314,11 +314,11 @@ function touchStarted() {
       }, newPageTitle, '?seed=' + seed);
     
       unearthing();
-      activateNewSeedTimeout = null;
+      // activateNewSeedTimeout = null;
 
-      inANewSeedTimeout = false;
-    }, 100);
-  }
+      // inANewSeedTimeout = false;
+  //   }, 100);
+  // }
 }
 
 function mousePressed() {
