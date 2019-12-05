@@ -24,7 +24,7 @@ function getUrlParam(parameter, defaultvalue) {
   return urlparameter;
 }
 
-var seed = getUrlParam('seed', Math.floor(Math.random() * 100000));
+var seed = getUrlParam('seed', Math.floor(Math.random() * 10000000));
 var newPageTitle = 'Treasure - ' + seed;
 history.pushState({
   seed: seed
@@ -296,7 +296,7 @@ function touchStarted() {
 }
 
 function mousePressed() {
-  seed = Math.floor(Math.random() * 100000);
+  seed = Math.floor(Math.random() * 10000000);
   Math.seedrandom(String(seed));
 
   var newPageTitle = 'Treasure - ' + seed;
