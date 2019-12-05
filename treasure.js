@@ -280,6 +280,8 @@ function unearthing() {
 window.onpopstate = function(event) {
   seed = event.state.seed;
   Math.seedrandom(String(seed));
+  var newPageTitle = 'Treasure - ' + seed;
+  document.title = newPageTitle;
   unearthing();
 }
 
@@ -287,6 +289,7 @@ function touchStarted() {
   seed = Math.floor(Math.random() * 10000000);
   Math.seedrandom(String(seed));
 
+  document.title = newPageTitle;
   var newPageTitle = 'Treasure - ' + seed;
   history.pushState({
     seed: seed
@@ -300,6 +303,7 @@ function mousePressed() {
   Math.seedrandom(String(seed));
 
   var newPageTitle = 'Treasure - ' + seed;
+  document.title = newPageTitle;
   history.pushState({
     seed: seed
   }, newPageTitle, '?seed=' + seed);
