@@ -290,19 +290,20 @@ window.onpopstate = function(event) {
   unearthing();
 }
 
-function touchStarted() {
-  // if (inANewSeedTimeout) {
-  //   return;
-  // } else {
-  //   wasDoubleTouch = touches.length > 1;
-  //   inANewSeedTimeout = true;
-  //   activateNewSeedTimeout = window.setTimeout(function() {
-      // if (wasDoubleTouch) {
-        // inANewSeedTimeout = false;
-        // activateNewSeedTimeout = null;
+var wasDoubleTouch = false;
+var inANewSeedTimeout = true;
 
-        // return;
-      // }
+function touchStarted() {
+  if (inANewSeedTimeout) {
+    return;
+  } else {
+    inANewSeedTimeout = true;
+    window.setTimeout(function() {
+      wasDoubleTouch = false;
+      inANewSeedTimeout = false;
+      if (wasDoubleTouch) {
+        return;
+      }
       seed = Math.floor(Math.random() * 10000000);
       Math.seedrandom(String(seed));
     
@@ -314,11 +315,9 @@ function touchStarted() {
       }, newPageTitle, '?seed=' + seed);
     
       unearthing();
-      // activateNewSeedTimeout = null;
-
-      // inANewSeedTimeout = false;
-  //   }, 100);
-  // }
+    }, 100);
+    wasDoubleTouch = touches.length > 1;
+  }
 }
 
 function mousePressed() {
@@ -342,10 +341,6 @@ function setup() {
   // After this function is run, p5js repeatedly calls
   // the 'draw' function, which runs a frame of the animation.
 }
-
-var wasDoubleTouch = false;
-var activateNewSeedTimeout;
-var inANewSeedTimeout = true;
 
 function draw() {
   push();
