@@ -312,19 +312,6 @@ function touchStarted() {
   wasDoubleTouch = touches.length > 1;
 }
 
-function mousePressed() {
-  seed = Math.floor(Math.random() * 10000000);
-  Math.seedrandom(String(seed));
-
-  var newPageTitle = 'Treasure - ' + seed;
-  document.title = newPageTitle;
-  history.pushState({
-    seed: seed
-  }, newPageTitle, '?seed=' + seed);
-
-  unearthing();
-}
-
 function setup() {
   createCanvas(canvasWidth, canvasHeight, WEBGL);
 
