@@ -291,8 +291,13 @@ window.onpopstate = function(event) {
 }
 
 function touchStarted() {
+  if (touches.length > 1) {
+    return;
+  }
+
   seed = Math.floor(Math.random() * 10000000);
   Math.seedrandom(String(seed));
+
 
   var newPageTitle = 'Treasure - ' + seed;
   document.title = newPageTitle;
