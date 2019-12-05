@@ -291,21 +291,34 @@ window.onpopstate = function(event) {
 }
 
 function touchStarted() {
-  if (touches.length > 1) {
+  if (inANewSeedTimeout) {
     return;
+  } else {
+    wasDoubleTouch = touches.length > 1;
+    inANewSeedTimeout = true;
+    activateNewSeedTimeout = window.setTimeout(function() {
+      if (wasDoubleTouch) {
+        inANewSeedTimeout = false;
+        activateNewSeedTimeout = null;
+
+        return;
+      }
+      seed = Math.floor(Math.random() * 10000000);
+      Math.seedrandom(String(seed));
+    
+    
+      var newPageTitle = 'Treasure - ' + seed;
+      document.title = newPageTitle;
+      history.pushState({
+        seed: seed
+      }, newPageTitle, '?seed=' + seed);
+    
+      unearthing();
+      activateNewSeedTimeout = null;
+
+      inANewSeedTimeout = false;
+    }, 100);
   }
-
-  seed = Math.floor(Math.random() * 10000000);
-  Math.seedrandom(String(seed));
-
-
-  var newPageTitle = 'Treasure - ' + seed;
-  document.title = newPageTitle;
-  history.pushState({
-    seed: seed
-  }, newPageTitle, '?seed=' + seed);
-
-  unearthing();
 }
 
 function mousePressed() {
@@ -330,8 +343,16 @@ function setup() {
   // the 'draw' function, which runs a frame of the animation.
 }
 
+var wasDoubleTouch = false;
+var activateNewSeedTimeout;
+var inANewSeedTimeout = true;
+
 function draw() {
   push();
+
+  if (touches.length > 1) {
+    wasDoubleTouch = true;
+  }
   
   if (useOtherPal) {
     background('#EEEEFB');
