@@ -291,33 +291,25 @@ window.onpopstate = function(event) {
 }
 
 var wasDoubleTouch = false;
-var inANewSeedTimeout = true;
+
+function touchEnded() {
+  if (!wasDoubleTouch) {
+    seed = Math.floor(Math.random() * 10000000);
+    Math.seedrandom(String(seed));
+  
+  
+    var newPageTitle = 'Treasure - ' + seed;
+    document.title = newPageTitle;
+    history.pushState({
+      seed: seed
+    }, newPageTitle, '?seed=' + seed);
+  
+    unearthing();
+  }
+}
 
 function touchStarted() {
-  if (inANewSeedTimeout) {
-    return;
-  } else {
-    inANewSeedTimeout = true;
-    window.setTimeout(function() {
-      wasDoubleTouch = false;
-      inANewSeedTimeout = false;
-      if (wasDoubleTouch) {
-        return;
-      }
-      seed = Math.floor(Math.random() * 10000000);
-      Math.seedrandom(String(seed));
-    
-    
-      var newPageTitle = 'Treasure - ' + seed;
-      document.title = newPageTitle;
-      history.pushState({
-        seed: seed
-      }, newPageTitle, '?seed=' + seed);
-    
-      unearthing();
-    }, 100);
-    wasDoubleTouch = touches.length > 1;
-  }
+  wasDoubleTouch = touches.length > 1;
 }
 
 function mousePressed() {
