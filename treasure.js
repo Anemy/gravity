@@ -31,6 +31,15 @@ if (!seed) {
   document.title = 'Treasure - ' + seed;
 }
 var newPageTitle = 'Treasure - ' + seed;
+
+// 'Autoplay' is also a url parameter - The value is the ms for getting a new treasure.
+// https://anemy.github.io/treasure/?autoplay=8000
+var autoplayMS = getUrlParam('autoplay');
+if (autoplayMS) {
+  autoplayMS = Number(autoplayMS);
+}
+
+// Update the url with the new seed.
 history.pushState({
   seed: seed
 }, newPageTitle, '?seed=' + seed);
@@ -310,6 +319,28 @@ function touchEnded() {
 
 function touchStarted() {
   wasDoubleTouch = touches.length > 1;
+}
+
+if (autoplayMS && autoplayMS !== NaN && autoplayMS > 0) {
+  // Clear some of the elements that aren't needed with autoplay.
+  // This is tightly coupled with ui and should probably be kept minimal.
+  document.getElementById('github-link').innerHTML = '';
+  document.getElementsByClassName('textToHide')[0].innerHTML = '';
+  document.getElementsByClassName('textToHide')[1].innerHTML = '';
+  document.getElementById('artsable-link').innerHTML = '';
+  
+  window.setInterval(function() {
+    seed = Math.floor(Math.random() * 10000000);
+    Math.seedrandom(String(seed));
+  
+    var newPageTitle = 'Treasure - ' + seed;
+    document.title = newPageTitle;
+    history.pushState({
+      seed: seed
+    }, newPageTitle, '?seed=' + seed);
+  
+    unearthing();
+  }, autoplayMS);
 }
 
 function setup() {
