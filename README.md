@@ -1,8 +1,8 @@
-[Treasure](https://anemy.github.io/treasure/) is a generative art piece.
+[Gravity](https://anemy.github.io/gravity/) is a generative art piece.
 
-See Treasure on [Artsable](https://artsable.com):
-[Treasure](https://artsable.com/workspace/5de82cbc9ef5ad001fcdd8f9)
+See Gravity on [Artsable](https://artsable.com):
+[Gravity](https://artsable.com/workspace/5de82cbc9ef5ad001fcdd8f9)
 
 ⚗ 
 
-![Treasure Algorithm Output](https://i.imgur.com/HKMrJPR.png)
+![Gravity Algorithm Output](https://i.imgur.com/HKMrJPR.png)
