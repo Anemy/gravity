@@ -28,12 +28,12 @@ var seed = getUrlParam('seed');
 if (!seed) {
   seed = Math.floor(Math.random() * 10000000);
 } else {
-  document.title = 'Treasure - ' + seed;
+  document.title = 'Gravity - ' + seed;
 }
-var newPageTitle = 'Treasure - ' + seed;
+var newPageTitle = 'Gravity - ' + seed;
 
-// 'Autoplay' is also a url parameter - The value is the ms for getting a new treasure.
-// https://anemy.github.io/treasure/?autoplay=8000
+// 'Autoplay' is also a url parameter - The value is the ms for getting a new gravity.
+// https://anemy.github.io/gravity/?autoplay=8000
 var autoplayMS = getUrlParam('autoplay');
 if (autoplayMS) {
   autoplayMS = Number(autoplayMS);
@@ -294,7 +294,7 @@ function unearthing() {
 window.onpopstate = function(event) {
   seed = event.state.seed;
   Math.seedrandom(String(seed));
-  var newPageTitle = 'Treasure - ' + seed;
+  var newPageTitle = 'Gravity - ' + seed;
   document.title = newPageTitle;
   unearthing();
 }
@@ -307,7 +307,7 @@ function touchEnded() {
     Math.seedrandom(String(seed));
   
   
-    var newPageTitle = 'Treasure - ' + seed;
+    var newPageTitle = 'Gravity - ' + seed;
     document.title = newPageTitle;
     history.pushState({
       seed: seed
@@ -333,7 +333,7 @@ if (autoplayMS && autoplayMS !== NaN && autoplayMS > 0) {
     seed = Math.floor(Math.random() * 10000000);
     Math.seedrandom(String(seed));
   
-    var newPageTitle = 'Treasure - ' + seed;
+    var newPageTitle = 'Gravity - ' + seed;
     document.title = newPageTitle;
     history.pushState({
       seed: seed
